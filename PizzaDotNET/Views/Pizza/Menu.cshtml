@@ -27,11 +27,11 @@
 
 
                     @Html.ActionLink("Normal: " + @Html.DisplayName(pizza.NormPrice.ToString()) + " kr.", "OrderAPizza", new { id = pizza.Id, size = "Normal" }, new { @class = "btn btn-success btn-sm btn-block" })
-                    @Html.ActionLink("Familie: " + @Html.DisplayName(pizza.FamPrice.ToString()) + " kr.", "OrderAPizza", new { id = pizza.Id, size = "Family" }, new { @class = "btn btn-success btn-sm btn-block" })
+                    @Html.ActionLink("Family: " + @Html.DisplayName(pizza.FamPrice.ToString()) + " kr.", "OrderAPizza", new { id = pizza.Id, size = "Family" }, new { @class = "btn btn-success btn-sm btn-block" })
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @Html.ActionLink("Delete", "Delete", new { id = pizza.Id }, new { @class = "btn btn-danger btn-block" })
+                        @Html.ActionLink("Delete", "Delete", new { id = pizza.Id }, new { @class = "btn btn-danger btn-sm btn-block" })
                         @*<button data-id="@/*pizza.Id*/" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirmation">
                             Delete
                         </button>
