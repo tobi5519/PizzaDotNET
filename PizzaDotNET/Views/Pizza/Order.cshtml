@@ -1,0 +1,87 @@
+﻿@model IEnumerable<PizzaDotNET.Models.Pizza>
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Your order: </h2>
+
+<table class="table">
+    <tr>
+        <th>
+            <label>Name</label>
+        </th>
+        <th>
+            <label>Toppings</label>
+        </th>
+        <th>
+            <label>Size</label>
+        </th>
+        <th>
+            <label>Price</label>
+        </th>
+    </tr>
+
+    @foreach (var pizza in Model)
+    {
+        <tr>
+            <td>
+                @pizza.Name
+            </td>
+            <td>
+                @pizza.Toppings
+            </td>
+            <td>
+                @if (pizza.FamPrice != 0)
+                {
+                    <p>Family</p>
+                }
+                @if (pizza.NormPrice != 0)
+                {
+                    <p>Normal</p>
+                }
+            <td>
+                @if (pizza.FamPrice != 0)
+                {
+                    @pizza.FamPrice
+                }
+                @if (pizza.NormPrice != 0)
+                {
+                    @pizza.NormPrice
+                }
+                kr.
+            </td>
+        </tr>
+    }
+</table>
+<p>Total: @Model.Sum(i => i.NormPrice + i.FamPrice) Kr. </p>
+
+
+@Html.ActionLink("Back to menu", "Menu", null, new { @class = "btn btn-primary" })
+
+
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmation">
+    Order
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmation">Confirm purchase</h5>
+            </div>
+            <div class="modal-body">
+                Total: @Model.Sum(i => i.NormPrice + i.FamPrice) Kr.
+                
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                @Html.ActionLink("Order", "EmptyCart", null, new { @class = "btn btn-success btn" })
+            </div>
+        </div>
+    </div>
+</div>
+

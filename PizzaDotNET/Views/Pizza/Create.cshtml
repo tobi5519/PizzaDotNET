@@ -1,0 +1,42 @@
+﻿@model PizzaDotNET.Models.Pizza
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create new pizza</h2>
+
+@using (Html.BeginForm("Create", "Pizza"))
+{
+    <p class="alert alert-info">Every field except toppings are <strong>required</strong> </p>
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.Name)*@
+        <label>Name</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", autofocus = "autofocus", placeholder = "eg. Hawaii" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.Toppings)*@
+        <label>Toppings</label>
+        @Html.TextBoxFor(m => m.Toppings, new { @class = "form-control", placeholder = "eg. bacon, bacon or bacon" })
+        @Html.ValidationMessageFor(m => m.Toppings, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.NormPrice)*@
+        <label>Normal size price</label>
+        @Html.TextBoxFor(m => m.NormPrice, new { @class = "form-control", placeholder = "eg. 100" })
+        @Html.ValidationMessageFor(m => m.NormPrice, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.FamPrice)*@
+        <label>Family size price</label>
+        @Html.TextBoxFor(m => m.FamPrice, new { @class = "form-control", placeholder = "eg. 150" })
+        @Html.ValidationMessageFor(m => m.FamPrice, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary create">Create</button>
+
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<PizzaDotNET.Models.Pizza>
+@{
+    ViewBag.Title = "Menu";
+}
+
+<h2>Menu</h2>
+<p class="alert alert-success">All pizzas come with <strong>tomato sauce</strong> </p>
+@Html.ActionLink("Orders", "Order", null, new { @class = "btn btn-primary btn-sm" })
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Toppings</th>
+            <th scope="col">Prices</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int i = 1;}
+        @foreach (var pizza in Model)
+        {
+            <tr>
+                <th scope="row">@i</th>
+                <td>@pizza.Name</td>
+                <td>@pizza.Toppings</td>
+                <td style="width: 10px;">
+
+
+                    @Html.ActionLink("Normal: " + @Html.DisplayName(pizza.NormPrice.ToString()) + " kr.", "OrderAPizza", new { id = pizza.Id, size = "Normal" }, new { @class = "btn btn-success btn-sm btn-block" })
+                    @Html.ActionLink("Familie: " + @Html.DisplayName(pizza.FamPrice.ToString()) + " kr.", "OrderAPizza", new { id = pizza.Id, size = "Family" }, new { @class = "btn btn-success btn-sm btn-block" })
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = pizza.Id }, new { @class = "btn btn-danger btn-block" })
+                        @*<button data-id="@/*pizza.Id*/" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirmation">
+                            Delete
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmation">Confirm deletion</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    }
+
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>

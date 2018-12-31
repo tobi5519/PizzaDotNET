@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +22,64 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/* Bootstrap overrides */
+
+.navbar-inverse {
+    background-color: #008461;
+    border-color: #ff5555;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+    font-size: 15px;
+    
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff;
+    font-weight: 700;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    font-size: 15px;
+    padding: 20px 10px;
+    border-radius: 5px;
+    
+}
+
+
+.form-control:focus {
+    border-color: #008461;
+}
+
+.create {
+    font-size: 16px;
+    padding: 7px 20px;
+    border-radius: 5px;
+    
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: #006b4e;
+}
+
+.jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    margin-top: 25px;
+    text-align: center;
+    color: white;
+    background-color: #008461;
+}
+
+body .container{
+    padding-left: 120px;
+    padding-right: 120px;
 }
