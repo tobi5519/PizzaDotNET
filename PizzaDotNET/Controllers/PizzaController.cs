@@ -45,10 +45,15 @@ namespace PizzaDotNET.Controllers
 
         public ActionResult Menu()
         {
-            
-            var pizzaer = _context.Pizzas.ToList();
 
-            return View(pizzaer);
+            var viewModel = new SessionAndTotalPizzasViewModel
+            {
+                AllPizzas = _context.Pizzas.ToList(),
+                SessionPizzas = Session["pizzaCart"] as List<Pizza> ?? new List<Pizza>()
+            };
+            
+
+            return View(viewModel);
         }
 
         public ActionResult EmptyCart()
