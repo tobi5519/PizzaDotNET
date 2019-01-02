@@ -9,7 +9,7 @@ namespace PizzaDotNET.Models
         [Required]
         [StringLength(128)]
         [ValidName(ErrorMessage = "Please capitalize the name")]
-        [UniqueName(ErrorMessage = "A pizza by that name already exists")]
+        //[UniqueName(ErrorMessage = "A pizza by that name already exists")]
         public string Name { get; set; }
         [StringLength(255)]
         public string Toppings { get; set; }

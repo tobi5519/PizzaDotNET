@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -267,6 +268,7 @@
     <Content Include="Views\Pizza\Create.cshtml" />
     <Content Include="Views\Pizza\Menu.cshtml" />
     <Content Include="Views\Pizza\Order.cshtml" />
+    <Content Include="Views\Pizza\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

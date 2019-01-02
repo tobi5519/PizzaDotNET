@@ -1,7 +1,9 @@
 ﻿using PizzaDotNET.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace PizzaDotNET.Controllers
@@ -31,6 +33,7 @@ namespace PizzaDotNET.Controllers
             }
             var pizza = new Pizza
             {
+
                 Name = pizzamodel.Name,
                 Toppings = pizzamodel.Toppings,
                 NormPrice = pizzamodel.NormPrice,
@@ -45,13 +48,11 @@ namespace PizzaDotNET.Controllers
 
         public ActionResult Menu()
         {
-
             var viewModel = new SessionAndTotalPizzasViewModel
             {
                 AllPizzas = _context.Pizzas.ToList(),
                 SessionPizzas = Session["pizzaCart"] as List<Pizza> ?? new List<Pizza>()
             };
-            
 
             return View(viewModel);
         }
@@ -94,19 +95,76 @@ namespace PizzaDotNET.Controllers
             return View(pizzaCart);
         }
 
+        public ActionResult RemoveFromOrder(int id)
+        {
+            var pizzaCart = Session["pizzaCart"] as List<Pizza> ?? new List<Pizza>();
+            Pizza order = _context.Pizzas.Find(id);
+
+            var pizza = new Pizza
+            {
+                Name = order.Name,
+                Toppings = order.Toppings,
+                NormPrice = order.NormPrice,
+                FamPrice = order.FamPrice
+            };
+
+            pizzaCart.Remove(pizzaCart.FirstOrDefault(d => d.Id == order.Id));
+            Session["CartObjects"] = pizzaCart;
+            return RedirectToAction("Order", pizzaCart);
 
 
+        }
 
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            Pizza pizza = _context.Pizzas.Find(id);
+            
+            return View(pizza);
+        }
 
+        [HttpPost]
+        [Authorize]
+        public ActionResult Edit([Bind(Include = "Id, Name, Toppings, NormPrice, FamPrice")] Pizza pizza)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", new Pizza());
+            }
 
+            Pizza p = new Pizza
+            {
+                Id = pizza.Id,
+                Name = pizza.Name,
+                Toppings = pizza.Toppings,
+                NormPrice = pizza.NormPrice,
+                FamPrice = pizza.FamPrice
+            };
+
+            _context.Entry(p).State = EntityState.Modified;
+            _context.SaveChanges();
+            
+            return RedirectToAction("Menu", "Pizza");
+        }
 
 
         [Authorize]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             try
             {
                 Pizza pizza = _context.Pizzas.Find(id);
+
+                if (pizza == null)
+                {
+                    return HttpNotFound();
+                }
+
                 _context.Pizzas.Remove(pizza);
                 _context.SaveChanges();
             }
@@ -118,7 +176,5 @@ namespace PizzaDotNET.Controllers
 
             return RedirectToAction("Menu", "Pizza");
         }
-
-
     }
 }

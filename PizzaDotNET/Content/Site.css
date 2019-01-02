@@ -110,12 +110,12 @@ ul {
     position: fixed;
     bottom: 15px;
     right: 15px;
-    width: 300px;
+    
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    min-width: 300px;
+    min-width: 150px;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
@@ -129,6 +129,10 @@ ul {
     padding: 1.25rem;
     
 }
+
+    .card-body > ul {
+        margin-bottom: 0px;
+    }
 
 .card-title {
     margin-bottom: 0.75rem;
@@ -166,4 +170,8 @@ ul {
     padding: 0.75rem 1.25rem;
     background-color: rgba(0, 0, 0, 0.03);
     border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.menu-btn {
+    margin-bottom: 15px;
 }

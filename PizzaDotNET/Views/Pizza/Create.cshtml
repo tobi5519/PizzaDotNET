@@ -2,13 +2,12 @@
 @{
     ViewBag.Title = "Create";
 }
-
 <h2>Create new pizza</h2>
 
 @using (Html.BeginForm("Create", "Pizza"))
 {
-    <p class="alert alert-info">Every field except toppings are <strong>required</strong> </p>
     @Html.AntiForgeryToken()
+    <p class="alert alert-info">Every field except toppings are <strong>required</strong> </p>
     <div class="form-group">
         @*@Html.LabelFor(m => m.Name)*@
         <label>Name</label>

@@ -1,6 +1,4 @@
-﻿@using PizzaDotNET.Models
-@model PizzaDotNET.Models.SessionAndTotalPizzasViewModel
-
+﻿@model PizzaDotNET.Models.SessionAndTotalPizzasViewModel
 @{
     ViewBag.Title = "Menu";
 }
@@ -9,29 +7,32 @@
 <div class="container cart">
     <div class="card bg-light text-dark">
         <div class="card-header">
-            <a data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Order</a>
-
+            <a data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Cart</a>
         </div>
         <div class="collapse" id="collapseExample">
             <div class="card-body">
                 <ul>
                     @foreach (var pizza in Model.SessionPizzas)
                     {
-                        <li>@pizza.Name</li>
-
+                        if (pizza.FamPrice != 0)
+                        {
+                            <div>@pizza.Name - Family</div>
+                        }
+                        if (pizza.NormPrice != 0)
+                        {
+                            <div>@pizza.Name - Normal</div>
+                        }
                     }
-                    <p>Total: @Model.SessionPizzas.Sum(e => e.NormPrice + e.FamPrice) Kr. </p>
+                    <hr style="margin-top: 5px; margin-bottom: 5px;" />
+                    <p style="display: inline; margin-bottom: 0px; font-weight: bold;">Total: @Model.SessionPizzas.Sum(e => e.NormPrice + e.FamPrice) Kr. </p>
+
                 </ul>
             </div>
         </div>
     </div>
 </div>
 
-
-
-
 <p class="alert alert-success">All pizzas come with <strong>tomato sauce</strong> </p>
-@Html.ActionLink("Orders", "Order", null, new { @class = "btn btn-primary btn-sm" })
 <table class="table table-hover">
     <thead>
         <tr>
@@ -47,47 +48,23 @@
         {
             <tr>
                 <th scope="row">@i</th>
-                <td>@pizza.Name</td>
+                @if (Request.IsAuthenticated)
+                {
+                    <td>
+                        @Html.ActionLink(pizza.Name, "Edit", "Pizza", new { id = pizza.Id },"")
+                    </td>
+                }
+                else
+                {
+                    <td>@pizza.Name</td>
+                }
                 <td>@pizza.Toppings</td>
                 <td style="width: 10px;">
-
-
                     @Html.ActionLink("Normal: " + @Html.DisplayName(pizza.NormPrice.ToString()) + " kr.", "OrderAPizza", new { id = pizza.Id, size = "Normal" }, new { @class = "btn btn-success btn-sm btn-block" })
                     @Html.ActionLink("Family: " + @Html.DisplayName(pizza.FamPrice.ToString()) + " kr.", "OrderAPizza", new { id = pizza.Id, size = "Family" }, new { @class = "btn btn-success btn-sm btn-block" })
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-
-                        @*<button data-id="@/*pizza.Id*/" type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirmation">
-                                Delete
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="confirmation">Confirm deletion</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>*@
-
-                        @Html.ActionLink("Delete", "Delete", new { id = pizza.Id }, new { @class = "btn btn-danger btn-sm btn-block" })
-
-
-
-                    }
-
                 </td>
             </tr>
             i++;
         }
-
     </tbody>
 </table>
