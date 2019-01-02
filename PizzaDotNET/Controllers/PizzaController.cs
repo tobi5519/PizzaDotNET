@@ -1,9 +1,7 @@
 ﻿using PizzaDotNET.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 
 namespace PizzaDotNET.Controllers
@@ -125,23 +123,14 @@ namespace PizzaDotNET.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id, Name, Toppings, NormPrice, FamPrice")] Pizza pizza)
+        public ActionResult Edit(Pizza pizza)
         {
             if (!ModelState.IsValid)
             {
                 return View("Edit", new Pizza());
             }
 
-            Pizza p = new Pizza
-            {
-                Id = pizza.Id,
-                Name = pizza.Name,
-                Toppings = pizza.Toppings,
-                NormPrice = pizza.NormPrice,
-                FamPrice = pizza.FamPrice
-            };
-
-            _context.Entry(p).State = EntityState.Modified;
+            _context.Entry(pizza).State = EntityState.Modified;
             _context.SaveChanges();
             
             return RedirectToAction("Menu", "Pizza");
@@ -149,30 +138,11 @@ namespace PizzaDotNET.Controllers
 
 
         [Authorize]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            try
-            {
-                Pizza pizza = _context.Pizzas.Find(id);
-
-                if (pizza == null)
-                {
-                    return HttpNotFound();
-                }
-
-                _context.Pizzas.Remove(pizza);
-                _context.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            Pizza pizza = _context.Pizzas.Find(id);
+            _context.Pizzas.Remove(pizza);
+            _context.SaveChanges();
 
             return RedirectToAction("Menu", "Pizza");
         }
